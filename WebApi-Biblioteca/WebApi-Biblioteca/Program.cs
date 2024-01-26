@@ -15,8 +15,12 @@ public class Program
 
         // Add services to the container.
 
-        builder.Services.AddDbContext<LivroContext>(opt =>
+        builder.Services.AddDbContext<BibliotecaContext>(opt =>
             opt.UseSqlServer(connectionString));
+
+        //add Automapper em todo App domain
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
         builder.Services.AddControllers();
 

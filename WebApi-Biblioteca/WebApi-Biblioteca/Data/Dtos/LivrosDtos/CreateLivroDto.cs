@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi_Biblioteca.Models;
+namespace WebApi_Biblioteca.Data.Dtos.LivrosDtos;
 
-public class Periodico
+public class CreateLivroDto
 {
-    [Key]
-    public int PeriodicoId { get; set; }
-
+    public int EditoraId {get; set; }
     public string? Nome { get; set; }
     public string? Assunto { get; set; }
     public int? Tombo { get; set; }
