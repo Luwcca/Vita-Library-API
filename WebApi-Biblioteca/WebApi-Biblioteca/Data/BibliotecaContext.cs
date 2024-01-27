@@ -10,4 +10,8 @@ public class BibliotecaContext : DbContext
     public DbSet<Livro> Livros { get; set;}
     public DbSet<Editora> Editoras { get; set;}
     public DbSet<Periodico> Periodicos { get; set;}
+    public DbSet<Aluno> Alunos { get; set;}
+    public DbSet<Funcionario> Funcionarios { get; set;}
+    public DbSet<Emprestimo> Emprestimos { get; set;}
+    public DbSet<ItemEmprestimo> ItemEmprestimos { get; set;}
 }

@@ -6,7 +6,7 @@ namespace WebApi_Biblioteca.Models;
 public class Funcionario : IdentityUser
 {
     [Key]
-    public int IdFuncionario{ get; set; }
+    public int FuncionarioId{ get; set; }
     public string? Nome { get; set; }
     public int Telefone { get; set; }
     public int CPF { get; set; }
@@ -18,5 +18,5 @@ public class Funcionario : IdentityUser
     public string? Login {  get; set; }     
     public string? Senha { get; set;}
 
-
+    public ICollection<Emprestimo> Emprestimos { get; set; }
 }

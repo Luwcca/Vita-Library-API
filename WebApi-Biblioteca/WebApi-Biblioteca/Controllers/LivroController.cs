@@ -19,7 +19,7 @@ public class LivroController : ControllerBase
         _mapper = mapper;
     }
 
-    
+
 
     [HttpPost]
     public IActionResult PostLivro([FromBody] CreateLivroDto livrodto)
@@ -50,4 +50,33 @@ public class LivroController : ControllerBase
 
         return Ok(livrodto);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult PutLivro(int id, [FromBody] UpdateLivroDto dto)
+    {
+        var livro = _context.Livros.Find(id);
+        if (livro == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(dto, livro);
+
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteLivro(int id)
+    {
+        var livro = _context.Livros.Find(id);
+        if (livro == null)
+        {
+            return NotFound();
+        }
+        _context.Livros.Remove(livro);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
 }

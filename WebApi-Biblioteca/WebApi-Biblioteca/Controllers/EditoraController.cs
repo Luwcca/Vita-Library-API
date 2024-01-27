@@ -48,4 +48,33 @@ public class EditoraController : ControllerBase
 
         return Ok(editoradto);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult PutEditora(int id, [FromBody] UpdateEditoraDto dto)
+    {
+        var editora = _context.Editoras.Find(id);
+        if (editora == null)
+        {
+            return NotFound();
+        }
+
+        _mapper.Map(dto, editora);
+
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteEditora(int id)
+    {
+        var editora = _context.Editoras.Find(id);
+        if (editora == null)
+        {
+            return NotFound();
+        }
+        _context.Editoras.Remove(editora);
+        _context.SaveChanges();
+        return NoContent();
+    }
 }

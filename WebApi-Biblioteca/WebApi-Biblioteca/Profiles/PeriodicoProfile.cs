@@ -10,6 +10,7 @@ namespace WebApi_Biblioteca.Profiles
         {
             CreateMap<CreatePeriodicoDto,Periodico>();
             CreateMap<ReadPeriodicoDto,Periodico>().ReverseMap();
+            CreateMap<UpdatePeriodicoDto, Periodico>().ReverseMap();
         }
     }
 }

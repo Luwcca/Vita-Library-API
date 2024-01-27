@@ -10,5 +10,6 @@ public class EditoraProfile : Profile
     {
         CreateMap<CreateEditoraDto, Editora>();
         CreateMap<ReadEditoraDto, Editora>().ReverseMap();
+        CreateMap<UpdateEditoraDto, Editora>().ReverseMap();
     }
 }

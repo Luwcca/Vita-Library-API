@@ -10,5 +10,6 @@ public class LivroProfile : Profile
     {
         CreateMap<CreateLivroDto, Livro>();
         CreateMap<ReadLivroDto, Livro>().ReverseMap();
+        CreateMap<UpdateLivroDto,Livro>().ReverseMap();
     }
 }
