@@ -12,4 +12,6 @@ public class Periodico
     public int? Tombo { get; set; }
     public bool? Status { get; set; }
     public string? Autor { get; set; }
+
+    public ItemEmprestimo ItemEmprestimo { get; set; }  
 }

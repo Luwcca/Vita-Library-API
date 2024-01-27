@@ -13,5 +13,5 @@ public class Emprestimo
 
     public Funcionario Funcionario { get; set; }
     public Aluno Aluno { get; set;}
-    public ItemEmprestimo ItemEmprestimos { get; set; }
+    public ItemEmprestimo ItemEmprestimo { get; set; }
 }

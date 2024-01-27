@@ -20,4 +20,6 @@ public class Livro
 
     public Editora Editora { get; set; }
 
+    public ItemEmprestimo ItemEmprestimo { get; set; }
+
 }
