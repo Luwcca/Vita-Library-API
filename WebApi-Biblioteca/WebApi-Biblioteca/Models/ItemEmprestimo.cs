@@ -1,7 +1,11 @@
-﻿namespace WebApi_Biblioteca.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApi_Biblioteca.Models;
 
 public class ItemEmprestimo
 {
+    [Key]
+    public int ItemEmprestimoId { get; set; }
     public int EmprestimoId { get; set; }
     public int LivroId { get; set; }
     public int PeriodicoId { get; set; }

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApi_Biblioteca.Models;
 
-public class Funcionario : IdentityUser
+public class Funcionario
 {
     [Key]
-    public int FuncionarioId{ get; set; }
+    public int FuncionarioId { get; set; }
     public string? Nome { get; set; }
     public int Telefone { get; set; }
     public int CPF { get; set; }
@@ -15,8 +14,8 @@ public class Funcionario : IdentityUser
     public string? Cidade { get; set; }
     public string? UF { get; set; }
 
-    public string? Login {  get; set; }     
-    public string? Senha { get; set;}
+    public string? Login { get; set; }
+    public string? Senha { get; set; }
 
     public ICollection<Emprestimo> Emprestimos { get; set; }
 }
