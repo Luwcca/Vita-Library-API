@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi_Biblioteca.Data.Dtos.AlunoDtos;
 using WebApi_Biblioteca.Data;
 using WebApi_Biblioteca.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi_Biblioteca.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class AlunoController : ControllerBase
 {
     private BibliotecaContext _context;

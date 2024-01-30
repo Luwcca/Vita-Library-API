@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi_Biblioteca.Data;
 using WebApi_Biblioteca.Data.Dtos.EditoraDtos;
@@ -8,6 +9,7 @@ namespace WebApi_Biblioteca.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class EditoraController : ControllerBase
 {
     private BibliotecaContext _context;

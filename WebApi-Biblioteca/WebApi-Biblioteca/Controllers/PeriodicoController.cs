@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi_Biblioteca.Data;
 using WebApi_Biblioteca.Data.Dtos.PeriodicoDtos;
@@ -8,6 +9,7 @@ namespace WebApi_Biblioteca.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class PeriodicoController : ControllerBase
 {
     private BibliotecaContext _context;
@@ -22,6 +24,7 @@ public class PeriodicoController : ControllerBase
 
 
     [HttpPost]
+    
     public IActionResult PostPeriodico([FromBody] CreatePeriodicoDto periodicodto)
     {
         Periodico periodico = _mapper.Map<Periodico>(periodicodto);

@@ -143,3 +143,4 @@ C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\obj\Debug\net8.0\ref\WebApi-Biblioteca.dll
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
