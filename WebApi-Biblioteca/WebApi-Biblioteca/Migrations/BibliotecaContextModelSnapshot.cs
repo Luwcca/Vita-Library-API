@@ -31,30 +31,37 @@ namespace WebApi_Biblioteca.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlunoId"));
 
                     b.Property<string>("Bairro")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CPF")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("Checkbox")
                         .HasColumnType("bit");
 
                     b.Property<string>("Cidade")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Multas")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rua")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Telefone")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AlunoId");
@@ -71,18 +78,23 @@ namespace WebApi_Biblioteca.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EditoraId"));
 
                     b.Property<string>("Bairro")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cidade")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EditoraId");
@@ -101,7 +113,7 @@ namespace WebApi_Biblioteca.Migrations
                     b.Property<int>("AlunoId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Devolucao")
+                    b.Property<DateTime?>("Devolucao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FuncionarioId")
@@ -128,30 +140,39 @@ namespace WebApi_Biblioteca.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FuncionarioId"));
 
                     b.Property<string>("Bairro")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CPF")
+                    b.Property<int?>("CPF")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Cidade")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rua")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Senha")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Telefone")
+                    b.Property<int?>("Telefone")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FuncionarioId");
@@ -167,16 +188,16 @@ namespace WebApi_Biblioteca.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemEmprestimoId"));
 
-                    b.Property<DateTime>("Devolucao")
+                    b.Property<DateTime?>("Devolucao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EmprestimoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LivroId")
+                    b.Property<int?>("LivroId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PeriodicoId")
+                    b.Property<int?>("PeriodicoId")
                         .HasColumnType("int");
 
                     b.HasKey("ItemEmprestimoId");
@@ -184,11 +205,9 @@ namespace WebApi_Biblioteca.Migrations
                     b.HasIndex("EmprestimoId")
                         .IsUnique();
 
-                    b.HasIndex("LivroId")
-                        .IsUnique();
+                    b.HasIndex("LivroId");
 
-                    b.HasIndex("PeriodicoId")
-                        .IsUnique();
+                    b.HasIndex("PeriodicoId");
 
                     b.ToTable("ItemEmprestimos");
                 });
@@ -202,21 +221,25 @@ namespace WebApi_Biblioteca.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LivroId"));
 
                     b.Property<string>("Assunto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Autor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EditoraId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
                     b.Property<int?>("Tombo")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("LivroId");
@@ -235,18 +258,22 @@ namespace WebApi_Biblioteca.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PeriodicoId"));
 
                     b.Property<string>("Assunto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Autor")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
                     b.Property<int?>("Tombo")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PeriodicoId");
@@ -282,16 +309,12 @@ namespace WebApi_Biblioteca.Migrations
                         .IsRequired();
 
                     b.HasOne("WebApi_Biblioteca.Models.Livro", "Livro")
-                        .WithOne("ItemEmprestimo")
-                        .HasForeignKey("WebApi_Biblioteca.Models.ItemEmprestimo", "LivroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ItemEmprestimo")
+                        .HasForeignKey("LivroId");
 
                     b.HasOne("WebApi_Biblioteca.Models.Periodico", "Periodico")
-                        .WithOne("ItemEmprestimo")
-                        .HasForeignKey("WebApi_Biblioteca.Models.ItemEmprestimo", "PeriodicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ItemEmprestimo")
+                        .HasForeignKey("PeriodicoId");
 
                     b.Navigation("Emprestimo");
 
@@ -334,14 +357,12 @@ namespace WebApi_Biblioteca.Migrations
 
             modelBuilder.Entity("WebApi_Biblioteca.Models.Livro", b =>
                 {
-                    b.Navigation("ItemEmprestimo")
-                        .IsRequired();
+                    b.Navigation("ItemEmprestimo");
                 });
 
             modelBuilder.Entity("WebApi_Biblioteca.Models.Periodico", b =>
                 {
-                    b.Navigation("ItemEmprestimo")
-                        .IsRequired();
+                    b.Navigation("ItemEmprestimo");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,12 +6,17 @@ public class Emprestimo
 {
     [Key]
     public int EmprestimoId { get; set; }
+    [Required(ErrorMessage = "Este campo é obrigatório")]
     public int AlunoId { get; set; }
+    [Required(ErrorMessage = "Este campo é obrigatório")]
     public int FuncionarioId { get; set; }
+    [Required(ErrorMessage = "Este campo é obrigatório")]
+    [DisplayFormat(DataFormatString = "dd/mm/yyy")]
     public DateTime Hora { get; set; }
-    public DateTime Devolucao { get; set; }
+    [DisplayFormat(DataFormatString = "dd/mm/yyy")]
+    public DateTime? Devolucao { get; set; }
 
-    public Funcionario Funcionario { get; set; }
-    public Aluno Aluno { get; set;}
-    public ItemEmprestimo ItemEmprestimo { get; set; }
+    public virtual Funcionario Funcionario { get; set; }
+    public virtual Aluno Aluno { get; set;}
+    public virtual ItemEmprestimo ItemEmprestimo { get; set; }
 }
