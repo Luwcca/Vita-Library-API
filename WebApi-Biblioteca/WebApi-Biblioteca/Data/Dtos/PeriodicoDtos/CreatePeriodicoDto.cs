@@ -6,4 +6,5 @@ public class CreatePeriodicoDto
     public string? Assunto { get; set; }
     public int? Tombo { get; set; }
     public string? Autor { get; set; }
+    public string? Status { get; set; }
 }

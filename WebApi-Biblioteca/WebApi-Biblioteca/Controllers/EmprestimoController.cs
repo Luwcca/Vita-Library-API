@@ -12,6 +12,7 @@ namespace WebApi_Biblioteca.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class EmprestimoController : ControllerBase
 {
     private BibliotecaContext _context;
@@ -23,15 +24,35 @@ public class EmprestimoController : ControllerBase
         _mapper = mapper;
     }
 
+
+    /// <summary>
+    /// Adiciona um Emprestimo ao Banco de Dados
+    /// </summary>
+    /// <param name="emprestimoDto">Objeto com os campos necessários para criação de um Emprestimo</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso inserção seja feita com sucesso</response>
     [HttpPost("Emprestimo")]
-    [AllowAnonymous]
     public IActionResult PostEmprestimo([FromBody] PostEmprestimoDto emprestimoDto)
     {
         Emprestimo emprestimo = _mapper.Map<Emprestimo>(emprestimoDto);
         var service = new EmprestimoService();
 
+        if (_context.Funcionarios.Find(emprestimo.FuncionarioId) == null)
+            { return NotFound("Funcionario não encontrado"); }
+        if (_context.Alunos.Find(emprestimo.AlunoId) == null) 
+            { return NotFound("Aluno não encontrado"); }
+
         if (!service.ValidarEntrada(emprestimo))
-        { return BadRequest("Escolha um livro ou um periodico para emprestimo"); }
+            { return BadRequest("Escolha um livro ou um periodico para emprestimo"); }
+
+        if(_context.Livros.Find(emprestimo.ItemEmprestimo.LivroId) == null & emprestimo.ItemEmprestimo.LivroId != null)
+            { return NotFound("Livro não encontrado"); }
+
+        if (_context.Periodicos.Find(emprestimo.ItemEmprestimo.PeriodicoId) == null & emprestimo.ItemEmprestimo.PeriodicoId != null)
+        { return NotFound("Periodico não encontrado"); }
+
+        if (!service.ValidarAluno(emprestimo, _context))
+        { return BadRequest("Aluno não pode pegar emprestimo, pois está multado"); }
 
         if (!service.ChecarDisponibilidade(emprestimo.ItemEmprestimo.LivroId, emprestimo.ItemEmprestimo.PeriodicoId, _context))
         { return BadRequest("Item indisponível para emprestimo"); }
@@ -40,17 +61,27 @@ public class EmprestimoController : ControllerBase
         service.RealizarEmprestimo(emprestimo, _context);
 
 
-        return Ok($"Realizado emprestimo sob número {emprestimo.EmprestimoId}");
+        return Ok($"Realizado emprestimo sob número {emprestimo.EmprestimoId}.\nData para devolução: {emprestimo.ItemEmprestimo.Devolucao}");
     }
 
+    /// <summary>
+    /// Atualiza o registro dos Emprestimo no banco de dados, devolvendo os items emprestados.
+    /// </summary>
+    /// <param name="Id">Id do Emprestimo para atualizar</param>
+    /// <param name="dto">Objeto com os campos necessários para atualização de um Emprestimo</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja atualizado com sucesso</response>
     [HttpPut("Devolução{Id}")]
-    [AllowAnonymous]
     public IActionResult PutDevolucao(int Id, [FromBody] DevolucaoDto dto)
     {
         var devolucao = _context.Emprestimos.Find(Id);
         if (devolucao == null)
         {
             return NotFound("Emprestimo não encontrado");
+        }
+        if(devolucao.Devolucao != null)
+        {
+            return BadRequest("Devolução já realizada");
         }
 
         devolucao.Devolucao = dto.Devolucao;
@@ -62,10 +93,16 @@ public class EmprestimoController : ControllerBase
         return Ok($"Emprestimo nº {devolucao.EmprestimoId} devolvido as {devolucao.Devolucao}");
     }
 
+    /// <summary>
+    /// Relatório dos Emprestimos no banco de dados
+    /// </summary>
+    /// <returns>IEnumerable</returns>
+    /// <response code="200">Caso retorno seja feita com sucesso</response>
     [HttpGet]
-    [AllowAnonymous]
-    public ICollection<GetEmprestimosDto> GetEmprestimos()
+    public ICollection<GetItemEmprestimosDto> GetEmprestimos()
     {
-        return _mapper.Map<List<GetEmprestimosDto>>(_context.Emprestimos);
+        return _mapper.Map<List<GetItemEmprestimosDto>>(_context.ItemEmprestimos.ToList());
     }
+
+
 }

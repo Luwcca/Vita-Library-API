@@ -29,6 +29,14 @@ public class FuncionarioController : ControllerBase
         _config = configuration;
     }
 
+    /// <summary>
+    /// Adiciona um Funcionario ao banco de dados
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários para criação de um Funcionario</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
+    
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [AllowAnonymous]
     [HttpPost("RegisterFuncionario")]
     public IActionResult RegisterFuncionario([FromBody] CreateFuncionarioDto dto)
@@ -39,8 +47,15 @@ public class FuncionarioController : ControllerBase
         return CreatedAtAction(nameof(GetFuncionario), new { id = funcionario.FuncionarioId }, funcionario);
     }
 
-    [AllowAnonymous]
+
+    /// <summary>
+    /// Realiza o Log In de um Funcionario atrelado ao banco de dados
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários para realizar o Log In</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso Log In seja feita com sucesso</response>
     [HttpPost("LogInFuncionario")]
+    [AllowAnonymous]
     public IActionResult LogInFuncionario([FromBody] LoginFuncionarioDto dto)
     {
 
@@ -52,10 +67,10 @@ public class FuncionarioController : ControllerBase
 
         if (!user.Senha.Equals(dto.Senha))
         {
-            return Unauthorized();
+            return Unauthorized("Senha incorreta");
         }
 
-        var claims = new []
+        var claims = new[]
         {
             new Claim("login", dto.Login),
             new Claim(JwtRegisteredClaimNames.Jti, user.FuncionarioId.ToString() )
@@ -63,7 +78,7 @@ public class FuncionarioController : ControllerBase
 
         var privateKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
 
-        var credentials = new SigningCredentials(privateKey,SecurityAlgorithms.HmacSha256);
+        var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
 
         var expiration = DateTime.UtcNow.AddMinutes(30);
 
@@ -78,12 +93,23 @@ public class FuncionarioController : ControllerBase
         return Ok(new JwtSecurityTokenHandler().WriteToken(token));
     }
 
+    /// <summary>
+    /// Relatório dos Funcionarios no banco de dados
+    /// </summary>
+    /// <returns>IEnumerable</returns>
+    /// <response code="200">Caso retorno seja feita com sucesso</response>
     [HttpGet]
     public IEnumerable<ReadFuncionarioDto> GetFuncionario()
     {
         return _mapper.Map<List<ReadFuncionarioDto>>(_context.Funcionarios);
     }
 
+    /// <summary>
+    /// Consulta um Funcionario no banco de dados
+    /// </summary>
+    /// <param name="id">Id do funcionario para consulta</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso consulta seja feita com sucesso</response>
     [HttpGet("{id}")]
     public IActionResult GetFuncionarioByID(int id)
     {
@@ -96,5 +122,47 @@ public class FuncionarioController : ControllerBase
         var funcionariodto = _mapper.Map<ReadFuncionarioDto>(funcionario);
 
         return Ok(funcionariodto);
+    }
+
+    /// <summary>
+    /// Atualiza o registro de um funcionario do banco de dados
+    /// </summary>
+    /// <param name="id">Id do funcionario para atualizar</param>
+    /// /// <param name="dto">Objeto com os campos necessários para atualização de um Funcionario</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja atualizado com sucesso</response>
+    [HttpPut("{id}")]
+    public IActionResult PutFuncionario(int id, [FromBody] UpdateFuncionarioDto dto)
+    {
+        var funcionario = _context.Funcionarios.Find(id);
+        if (funcionario == null)
+        {
+            return NotFound("Funcionario não encontrado");
+        }
+
+        _mapper.Map(dto, funcionario);
+
+        _context.SaveChanges();
+        return Ok("Informações do Funcionario alterada");
+    }
+
+    /// <summary>
+    /// Deleta um Funcionario do banco de dados
+    /// </summary>
+    /// <param name="id">Id do Funcionario para deletar</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja deletado com sucesso</response>
+    [HttpDelete("{id}")]
+    public IActionResult DeleteFuncionario(int id)
+    {
+        var funcionario = _context.Funcionarios.Find(id);
+        if (funcionario == null)
+        {
+            return NotFound("Funcionario não encontrado");
+        }
+        _context.Funcionarios.Remove(funcionario);
+        _context.SaveChanges();
+
+        return Ok("Funcionario deletado");
     }
 }

@@ -7,6 +7,7 @@ public class EmprestimoService
 {
     public bool ValidarEntrada(Emprestimo emprestimo)
     {
+
         if (emprestimo.ItemEmprestimo.LivroId == 0)
         {
             emprestimo.ItemEmprestimo.LivroId = null;
@@ -17,7 +18,9 @@ public class EmprestimoService
             emprestimo.ItemEmprestimo.PeriodicoId = null;
         }
 
-        if (emprestimo.ItemEmprestimo.LivroId == null && emprestimo.ItemEmprestimo.PeriodicoId == null)
+        if ((emprestimo.ItemEmprestimo.LivroId == null & emprestimo.ItemEmprestimo.PeriodicoId == null)
+            | (emprestimo.ItemEmprestimo.LivroId != null & emprestimo.ItemEmprestimo.PeriodicoId != null))
+
         {
             return false;
         }
@@ -27,6 +30,7 @@ public class EmprestimoService
     {
         if (livroId != null)
         {
+
             if((bool)context.Livros.Find(livroId).Status)
             {
                 context.Livros.Find(livroId).Status = false;
@@ -48,6 +52,7 @@ public class EmprestimoService
 
     public void RealizarEmprestimo(Emprestimo emprestimo, BibliotecaContext _context)
     {
+        emprestimo.ItemEmprestimo.Devolucao = emprestimo.Hora.AddDays(5);
         _context.Emprestimos.Add(emprestimo);
         _context.SaveChanges();
     }
@@ -69,5 +74,14 @@ public class EmprestimoService
         }
 
         _context.SaveChanges();
+    }
+
+    internal bool ValidarAluno(Emprestimo emprestimo, BibliotecaContext _context)
+    {
+        if (!_context.Alunos.FirstOrDefault(x => x.AlunoId == emprestimo.AlunoId).Checkbox)
+        {
+            return false;
+        }
+        return true;
     }
 }

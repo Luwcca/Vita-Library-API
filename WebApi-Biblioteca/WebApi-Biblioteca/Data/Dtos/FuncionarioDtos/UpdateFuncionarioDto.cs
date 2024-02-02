@@ -1,8 +1,7 @@
 ﻿namespace WebApi_Biblioteca.Data.Dtos.FuncionarioDtos
 {
-    public class ReadFuncionarioDto
+    public class UpdateFuncionarioDto
     {
-        public int FuncionarioId { get; set; }
         public string? Nome { get; set; }
         public int? Telefone { get; set; }
         public int? CPF { get; set; }

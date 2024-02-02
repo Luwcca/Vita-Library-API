@@ -22,8 +22,14 @@ public class LivroController : ControllerBase
     }
 
 
-
+    /// <summary>
+    /// Adiciona um Livro ao banco de dados
+    /// </summary>
+    /// <param name="livrodto">Objeto com os campos necessários para criação de um Livro</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult PostLivro([FromBody] CreateLivroDto livrodto)
     {
         Livro livro = _mapper.Map<Livro>(livrodto);
@@ -33,12 +39,23 @@ public class LivroController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Relatório dos Livros no banco de dados
+    /// </summary>
+    /// <returns>IEnumerable</returns>
+    /// <response code="200">Caso retorno seja feita com sucesso</response>
     [HttpGet]
     public IEnumerable<ReadLivroDto> GetLivros()
     {
         return _mapper.Map<List<ReadLivroDto>>(_context.Livros);
     }
 
+    /// <summary>
+    /// Consulta um Livro no banco de dados
+    /// </summary>
+    /// <param name="id">Id do Livro para consulta</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso consulta seja feita com sucesso</response>
     [HttpGet("{id}")]
     public IActionResult GetLivrosByID(int id)
     {
@@ -53,6 +70,13 @@ public class LivroController : ControllerBase
         return Ok(livrodto);
     }
 
+    /// <summary>
+    /// Atualiza o registro de um Livro no banco de dados
+    /// </summary>
+    /// <param name="id">Id do Livro para atualizar</param>
+    /// <param name="dto">Objeto com os campos necessários para atualização de um Livro</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja atualizado com sucesso</response>
     [HttpPut("{id}")]
     public IActionResult PutLivro(int id, [FromBody] UpdateLivroDto dto)
     {
@@ -68,6 +92,12 @@ public class LivroController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Deleta um Livro do banco de dados
+    /// </summary>
+    /// <param name="id">Id do Livro para deletar</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja deletado com sucesso</response>
     [HttpDelete("{id}")]
     public IActionResult DeleteLivro(int id)
     {

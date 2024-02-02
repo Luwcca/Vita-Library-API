@@ -21,7 +21,14 @@ public class EditoraController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Adiciona uma Editora ao banco de dados
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários para criação de uma Editora</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult PostEditora([FromBody] CreateEditoraDto dto)
     {
         Editora editora = _mapper.Map<Editora>(dto);
@@ -31,12 +38,23 @@ public class EditoraController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Relatório das Editoras no banco de dados
+    /// </summary>
+    /// <returns>IEnumerable</returns>
+    /// <response code="200">Caso retorno seja feita com sucesso</response>
     [HttpGet]
     public IEnumerable<ReadEditoraDto> GetEditora()
     {
         return _mapper.Map<List<ReadEditoraDto>>(_context.Editoras);
     }
 
+    /// <summary>
+    /// Consulta uma Editora no banco de dados
+    /// </summary>
+    /// <param name="id">Id da Editora para consulta</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso consulta seja feita com sucesso</response>
     [HttpGet("{id}")]
     public IActionResult GetEditoraByID(int id)
     {
@@ -51,6 +69,13 @@ public class EditoraController : ControllerBase
         return Ok(editoradto);
     }
 
+    /// <summary>
+    /// Atualiza o registro de uma Editora no banco de dados
+    /// </summary>
+    /// <param name="id">Id da Editora para atualizar</param>
+    /// <param name="dto">Objeto com os campos necessários para atualização de uma Editora</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja atualizado com sucesso</response>
     [HttpPut("{id}")]
     public IActionResult PutEditora(int id, [FromBody] UpdateEditoraDto dto)
     {
@@ -66,7 +91,12 @@ public class EditoraController : ControllerBase
         return NoContent();
     }
 
-
+    /// <summary>
+    /// Deleta uma Editora do banco de dados
+    /// </summary>
+    /// <param name="id">Id da Editora para deletar</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso registro seja deletado com sucesso</response>
     [HttpDelete("{id}")]
     public IActionResult DeleteEditora(int id)
     {

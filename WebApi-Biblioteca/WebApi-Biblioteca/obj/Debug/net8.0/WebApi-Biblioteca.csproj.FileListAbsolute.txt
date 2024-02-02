@@ -150,3 +150,5 @@ C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\WebApi-Biblioteca.xml
+C:\Users\Lucca\source\repos\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\obj\Debug\net8.0\WebApi-Biblioteca.xml

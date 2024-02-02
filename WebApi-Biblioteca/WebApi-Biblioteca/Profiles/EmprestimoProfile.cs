@@ -10,22 +10,8 @@ public class EmprestimoProfile : Profile
     {
         CreateMap<PostEmprestimoDto, Emprestimo>();
         CreateMap<PostItemEmprestimoDto, ItemEmprestimo>();
-
-
-        CreateMap<ItemEmprestimo, GetItemEmprestimosDto>().ReverseMap() ;
-           
-
-        CreateMap<Emprestimo,GetEmprestimosDto>().ReverseMap()
-            .ForMember(
-                x => x.EmprestimoId,
-                opt => opt.MapFrom(src => src.EmprestimoId))
-            .ForMember(
-                x => x.AlunoId,
-                opt => opt.MapFrom(src => src.AlunoId))
-            .ForMember(
-                x => x.FuncionarioId,
-                opt => opt.MapFrom(src => src.FuncionarioId)
-            );
-
+        CreateMap<ItemEmprestimo, GetItemEmprestimosDto>();
+        CreateMap<Emprestimo, GetEmprestimosDto>();
+            
     }
 }
