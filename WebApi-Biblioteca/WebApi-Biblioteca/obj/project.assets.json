@@ -4773,19 +4773,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lucca\\.nuget\\packages\\": {}
+    "C:\\Users\\lgioppo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lucca\\source\\repos\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\WebApi-Biblioteca.csproj",
+      "projectUniqueName": "C:\\Users\\lgioppo\\Documents\\c#\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\WebApi-Biblioteca.csproj",
       "projectName": "WebApi-Biblioteca",
-      "projectPath": "C:\\Users\\Lucca\\source\\repos\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\WebApi-Biblioteca.csproj",
-      "packagesPath": "C:\\Users\\Lucca\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lucca\\source\\repos\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\obj\\",
+      "projectPath": "C:\\Users\\lgioppo\\Documents\\c#\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\WebApi-Biblioteca.csproj",
+      "packagesPath": "C:\\Users\\lgioppo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lgioppo\\Documents\\c#\\Vita-Library-API\\WebApi-Biblioteca\\WebApi-Biblioteca\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lucca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lgioppo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
