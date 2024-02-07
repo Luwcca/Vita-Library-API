@@ -14,21 +14,52 @@ public class PostLivroUnitTest : IClassFixture<LivrosUnitTestController>
         _controller = new LivroController(controller.context, controller.mapper);
     }
 
+    [Fact]
     public void PostLivro_Ok_Result()
     {
         var livrodto = new CreateLivroDto
         {
             EditoraId = 1,
-            Nome = "lIVRO",
-            Assunto = "lIVRO",
+            Nome = "Livro",
+            Assunto = "Programação",
             Tombo = 10239123,
             Status = true,
-            Autor = "lIVRO"
+            Autor = "Livro"
         };
 
         var data = _controller.PostLivro(livrodto);
 
         var result = data.Result.Should().BeOfType<CreatedAtActionResult>();
         result.Subject.StatusCode.Should().Be(201);
+    }
+
+    [Fact]
+    public void PostLivro_BadRequest_Result()
+    {
+        CreateLivroDto livrodto = null;
+
+        var data = _controller.PostLivro(livrodto);
+
+        var result = data.Result.Should().BeOfType<BadRequestResult>();
+        result.Subject.StatusCode.Should().Be(400);
+    }
+
+    [Fact]
+    public void PostLivro_NotFund_Result()
+    {
+        var livrodto = new CreateLivroDto
+        {
+            EditoraId = 999,
+            Nome = "Livro",
+            Assunto = "Programação",
+            Tombo = 10239123,
+            Status = true,
+            Autor = "Livro"
+        };
+
+        var data = _controller.PostLivro(livrodto);
+
+        var result = data.Result.Should().BeOfType<NotFoundResult>();
+        result.Subject.StatusCode.Should().Be(404);
     }
 }

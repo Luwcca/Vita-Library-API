@@ -160,7 +160,6 @@ C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Bibliote
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\WebApi-Biblioteca.pdb
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\WebApi-Biblioteca.xml
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\lgioppo\Documents\c#\Vita-Library-API\WebApi-Biblioteca\WebApi-Biblioteca\bin\Debug\net8.0\Castle.Core.dll
