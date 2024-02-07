@@ -30,9 +30,13 @@ public class LivroController : ControllerBase
     /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public IActionResult PostLivro([FromBody] CreateLivroDto livrodto)
+    public ActionResult<CreateLivroDto> PostLivro([FromBody] CreateLivroDto livrodto)
     {
-        Livro livro = _mapper.Map<Livro>(livrodto);
+        if (livrodto == null)
+        {
+            return BadRequest("Todos os campos do formulário precisam ser preenchidos");
+        }
+        var livro = _mapper.Map<Livro>(livrodto);
         _context.Livros.Add(livro);
         _context.SaveChanges();
         return CreatedAtAction(nameof(GetLivros), new { id = livro.LivroId }, livro);
@@ -44,10 +48,12 @@ public class LivroController : ControllerBase
     /// </summary>
     /// <returns>IEnumerable</returns>
     /// <response code="200">Caso retorno seja feita com sucesso</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet]
-    public IEnumerable<ReadLivroDto> GetLivros()
+    public ActionResult<IEnumerable<ReadLivroDto>> GetLivros()
     {
-        return _mapper.Map<List<ReadLivroDto>>(_context.Livros);
+        var livros = _mapper.Map<IEnumerable<ReadLivroDto>>(_context.Livros);
+        return Ok(livros);
     }
 
     /// <summary>
@@ -56,13 +62,21 @@ public class LivroController : ControllerBase
     /// <param name="id">Id do Livro para consulta</param>
     /// <returns>IActionResult</returns>
     /// <response code="200">Caso consulta seja feita com sucesso</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("{id}")]
-    public IActionResult GetLivrosByID(int id)
+    public ActionResult<ReadLivroDto> GetLivrosByID(int id)
     {
+        if (id <= 0 || id == null)
+        {
+            return BadRequest("Id de Livro inválido");
+        }
+
         var livro = _context.Livros.Find(id);
         if (livro == null)
         {
-            return NotFound();
+            return NotFound("Livro não encontrado");
         }
 
         var livrodto = _mapper.Map<ReadLivroDto>(livro);

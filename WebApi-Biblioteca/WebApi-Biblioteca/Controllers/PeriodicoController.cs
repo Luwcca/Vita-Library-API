@@ -46,9 +46,10 @@ public class PeriodicoController : ControllerBase
     /// <returns>IEnumerable</returns>
     /// <response code="200">Caso retorno seja feita com sucesso</response>
     [HttpGet]
-    public IEnumerable<ReadPeriodicoDto> GetPeriodicos()
+    public ActionResult<IEnumerable<ReadPeriodicoDto>> GetPeriodicos()
     {
-        return _mapper.Map<List<ReadPeriodicoDto>>(_context.Periodicos);
+        var periodicos = _mapper.Map<List<ReadPeriodicoDto>>(_context.Periodicos);
+        return Ok(periodicos);
     }
 
     /// <summary>
