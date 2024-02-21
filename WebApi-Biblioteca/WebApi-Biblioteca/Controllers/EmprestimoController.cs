@@ -29,24 +29,30 @@ public class EmprestimoController : ControllerBase
     /// Adiciona um Emprestimo ao Banco de Dados
     /// </summary>
     /// <param name="emprestimoDto">Objeto com os campos necessários para criação de um Emprestimo</param>
-    /// <returns>IActionResult</returns>
-    /// <response code="200">Caso inserção seja feita com sucesso</response>
+    /// <returns>ActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
+    /// <response code="400">Caso formulário para emprestimo esteja incorreto</response>
+    /// <response code="404">Caso Id não seja encontrado</response>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPost("Emprestimo")]
-    public IActionResult PostEmprestimo([FromBody] PostEmprestimoDto emprestimoDto)
+    public ActionResult<PostEmprestimoDto> PostEmprestimo([FromBody] PostEmprestimoDto emprestimoDto)
     {
-        Emprestimo emprestimo = _mapper.Map<Emprestimo>(emprestimoDto);
+        var emprestimo = _mapper.Map<Emprestimo>(emprestimoDto);
         var service = new EmprestimoService();
 
         if (_context.Funcionarios.Find(emprestimo.FuncionarioId) == null)
-            { return NotFound("Funcionario não encontrado"); }
-        if (_context.Alunos.Find(emprestimo.AlunoId) == null) 
-            { return NotFound("Aluno não encontrado"); }
+        { return NotFound("Funcionario não encontrado"); }
+
+        if (_context.Alunos.Find(emprestimo.AlunoId) == null)
+        { return NotFound("Aluno não encontrado"); }
 
         if (!service.ValidarEntrada(emprestimo))
-            { return BadRequest("Escolha um livro ou um periodico para emprestimo"); }
+        { return BadRequest("Escolha um livro ou um periodico para emprestimo"); }
 
-        if(_context.Livros.Find(emprestimo.ItemEmprestimo.LivroId) == null & emprestimo.ItemEmprestimo.LivroId != null)
-            { return NotFound("Livro não encontrado"); }
+        if (_context.Livros.Find(emprestimo.ItemEmprestimo.LivroId) == null & emprestimo.ItemEmprestimo.LivroId != null)
+        { return NotFound("Livro não encontrado"); }
 
         if (_context.Periodicos.Find(emprestimo.ItemEmprestimo.PeriodicoId) == null & emprestimo.ItemEmprestimo.PeriodicoId != null)
         { return NotFound("Periodico não encontrado"); }
@@ -57,11 +63,16 @@ public class EmprestimoController : ControllerBase
         if (!service.ChecarDisponibilidade(emprestimo.ItemEmprestimo.LivroId, emprestimo.ItemEmprestimo.PeriodicoId, _context))
         { return BadRequest("Item indisponível para emprestimo"); }
 
+        try
+        {
+            service.RealizarEmprestimo(emprestimo, _context);
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
 
-        service.RealizarEmprestimo(emprestimo, _context);
-
-
-        return Ok($"Realizado emprestimo sob número {emprestimo.EmprestimoId}.\nData para devolução: {emprestimo.ItemEmprestimo.Devolucao}");
+        return CreatedAtAction(nameof(PostEmprestimo), $"Realizado emprestimo sob número {emprestimo.EmprestimoId}.\nData para devolução: {emprestimo.ItemEmprestimo.Devolucao}");
     }
 
     /// <summary>
@@ -69,17 +80,28 @@ public class EmprestimoController : ControllerBase
     /// </summary>
     /// <param name="Id">Id do Emprestimo para atualizar</param>
     /// <param name="dto">Objeto com os campos necessários para atualização de um Emprestimo</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja atualizado com sucesso</response>
-    [HttpPut("Devolução{Id}")]
-    public IActionResult PutDevolucao(int Id, [FromBody] DevolucaoDto dto)
+    /// <response code="400">Caso devolução já tenha sido realizada</response>
+    /// <response code="400">Caso formulário de devolução esteja incorreto</response>
+    /// <response code="404">Caso o Id do emprestimo não seja encontrado na Banco de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPatch("Devolução{Id}")]
+    public ActionResult<DevolucaoDto> PatchDevolucao(int Id, [FromBody] DevolucaoDto dto)
     {
+        if(dto== null)
+        {
+            return BadRequest("Formulário para devolução incorreto");
+        }
+
         var devolucao = _context.Emprestimos.Find(Id);
         if (devolucao == null)
         {
             return NotFound("Emprestimo não encontrado");
         }
-        if(devolucao.Devolucao != null)
+        if (devolucao.Devolucao != null)
         {
             return BadRequest("Devolução já realizada");
         }
@@ -88,21 +110,27 @@ public class EmprestimoController : ControllerBase
 
         var service = new EmprestimoService();
 
-        service.Devolucao(devolucao, _context);
-
+        try
+        {
+            service.Devolucao(devolucao, _context);
+        }
+        catch( Exception ex )
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
         return Ok($"Emprestimo nº {devolucao.EmprestimoId} devolvido as {devolucao.Devolucao}");
     }
 
     /// <summary>
     /// Relatório dos Emprestimos no banco de dados
     /// </summary>
-    /// <returns>IEnumerable</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso retorno seja feita com sucesso</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet]
-    public ICollection<GetItemEmprestimosDto> GetEmprestimos()
+    public ActionResult<IEnumerable<GetItemEmprestimosDto>> GetEmprestimos()
     {
-        return _mapper.Map<List<GetItemEmprestimosDto>>(_context.ItemEmprestimos.ToList());
+        var emprestimos = _mapper.Map<IEnumerable<GetItemEmprestimosDto>>(_context.ItemEmprestimos.ToList());
+        return Ok(emprestimos);
     }
-
-
 }

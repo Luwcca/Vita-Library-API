@@ -9,7 +9,6 @@
         public string? Bairro { get; set; }
         public string? Cidade { get; set; }
         public string? UF { get; set; }
-        public int? Multas { get; set; }
-        public bool Checkbox { get; set; }
+       
     }
 }

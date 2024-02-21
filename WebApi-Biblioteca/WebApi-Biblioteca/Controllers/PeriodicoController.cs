@@ -27,15 +27,28 @@ public class PeriodicoController : ControllerBase
     /// Adiciona um Periodico ao banco de dados
     /// </summary>
     /// <param name="periodicodto">Objeto com os campos necessários para criação de um Periodico</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="201">Caso inserção seja feita com sucesso</response>
-    [HttpPost]
+    /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public IActionResult PostPeriodico([FromBody] CreatePeriodicoDto periodicodto)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPost]
+    public ActionResult<CreatePeriodicoDto> PostPeriodico([FromBody] CreatePeriodicoDto periodicodto)
     {
         Periodico periodico = _mapper.Map<Periodico>(periodicodto);
-        _context.Periodicos.Add(periodico);
-        _context.SaveChanges();
+
+        try
+        {
+
+            _context.Periodicos.Add(periodico);
+            _context.SaveChanges();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
+
         return CreatedAtAction(nameof(GetPeriodicos), new { id = periodico.PeriodicoId }, periodico);
 
     }
@@ -43,8 +56,9 @@ public class PeriodicoController : ControllerBase
     /// <summary>
     /// Relatório dos Periodicoss no banco de dados
     /// </summary>
-    /// <returns>IEnumerable</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso retorno seja feita com sucesso</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet]
     public ActionResult<IEnumerable<ReadPeriodicoDto>> GetPeriodicos()
     {
@@ -56,15 +70,25 @@ public class PeriodicoController : ControllerBase
     /// Consulta um Periodico no banco de dados
     /// </summary>
     /// <param name="id">Id do Periodico para consulta</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso consulta seja feita com sucesso</response>
+    /// <response code="400">Caso  Id de consulta seja inválido</response>
+    /// <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("{id}")]
-    public IActionResult GetPeriodicosByID(int id)
+    public ActionResult<ReadPeriodicoDto> GetPeriodicosByID(int id)
     {
+        if (id <= 0 || id == null)
+        {
+            return BadRequest("Id de Periodico inválido");
+        }
+
         var periodico = _context.Periodicos.Find(id);
         if (periodico == null)
         {
-            return NotFound();
+            return NotFound("Periodico não encontrado na Base de dados");
         }
 
         var periodicodto = _mapper.Map<ReadPeriodicoDto>(periodico);
@@ -77,39 +101,55 @@ public class PeriodicoController : ControllerBase
     /// </summary>
     /// <param name="id">Id do Periodico para atualizar</param>
     /// <param name="dto">Objeto com os campos necessários para atualização de um Periodico</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja atualizado com sucesso</response>
+    /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+    /// <response code="404">Caso o Id não seja encontrado na Base de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPut("{id}")]
-    public IActionResult PutPeriodico(int id, [FromBody] UpdatePeriodicoDto dto)
+    public ActionResult<UpdatePeriodicoDto> PutPeriodico(int id, [FromBody] UpdatePeriodicoDto dto)
     {
         var periodico = _context.Periodicos.Find(id);
         if (periodico == null)
         {
-            return NotFound();
+            return NotFound("Periodico não econtrado na Base de dados");
         }
 
-        _mapper.Map(dto, periodico);
+        try
+        {
+            _mapper.Map(dto, periodico);
 
-        _context.SaveChanges();
-        return NoContent();
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
+
+        return Ok("Periodico atualizado");
     }
 
     /// <summary>
     /// Deleta um Periodico do banco de dados
     /// </summary>
     /// <param name="id">Id do Periodico para deletar</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja deletado com sucesso</response>
+    /// <response code="404">Caso Id do periodico não encontrado no Base de dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{id}")]
-    public IActionResult DeletePeriodico(int id)
+    public ActionResult DeletePeriodico(int id)
     {
         var periodico = _context.Periodicos.Find(id);
         if (periodico == null)
         {
-            return NotFound();
+            return NotFound("Id de periodico não encontrado no Base de dados");
         }
         _context.Periodicos.Remove(periodico);
         _context.SaveChanges();
-        return NoContent();
+        return Ok("Periodico deletado");
     }
 }

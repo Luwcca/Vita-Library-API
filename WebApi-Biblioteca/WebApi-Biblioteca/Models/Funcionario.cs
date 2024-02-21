@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi_Biblioteca.Models;
 
@@ -9,7 +10,7 @@ public class Funcionario
     [Required(ErrorMessage = "Este campo é obrigatório")]
     public string? Nome { get; set; }
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    
+
     public int? Telefone { get; set; }
     [Required(ErrorMessage = "Este campo é obrigatório")]
     public int? CPF { get; set; }
@@ -21,6 +22,7 @@ public class Funcionario
     public string? Cidade { get; set; }
     [Required(ErrorMessage = "Este campo é obrigatório")]
     public string? UF { get; set; }
+
     [Required(ErrorMessage = "Este campo é obrigatório")]
     public string? Login { get; set; }
     [Required(ErrorMessage = "Este campo é obrigatório")]

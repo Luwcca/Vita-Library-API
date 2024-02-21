@@ -22,11 +22,11 @@ public class PutLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void PutLivro_Ok_Result()
     {
-        var livroId = 2;
+        var livroId = 44;
 
         var livrodto = new UpdateLivroDto
         {
-            EditoraId = 1,
+            EditoraId = 2,
             Nome = "Livro",
             Assunto = "Programação",
             Tombo = 10239123,
@@ -64,9 +64,16 @@ public class PutLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void PutLivro_BadRequest_Result()
     {
-        var livroId = 2;
+        var livroId = 44;
 
-        UpdateLivroDto livrodto = null;
+        var livrodto = new UpdateLivroDto
+        {
+            EditoraId = 1,
+            Nome = "Livro",
+            Tombo = 10239123,
+            Status = true,
+            Autor = "Livro"
+        };
 
         var data = _controller.PutLivro(livroId, livrodto);
 

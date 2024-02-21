@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApi_Biblioteca.Models;
 
@@ -18,11 +18,11 @@ public class Livro
     [Required(ErrorMessage = "Este campo é obrigatório")]
     public int? Tombo { get; set; }
     public bool? Status { get; set; }
-    [Required(ErrorMessage = "Este campo é obrigatório")] 
+    [Required(ErrorMessage = "Este campo é obrigatório")]
     public string? Autor { get; set; }
 
     public virtual Editora Editora { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<ItemEmprestimo> ItemEmprestimo { get; set; }
 
 }

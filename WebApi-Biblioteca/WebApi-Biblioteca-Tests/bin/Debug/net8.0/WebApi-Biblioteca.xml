@@ -9,14 +9,15 @@
             Adiciona um Aluno ao banco de dados
             </summary>
             <param name="dto">Objeto com os campos necessários para criação de um Aluno</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>   
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.AlunoController.GetAluno">
             <summary>
             Relatório dos Alunos no banco de dados
             </summary>
-            <returns>IEnumerable</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso retorno seja feita com sucesso</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.AlunoController.GetAlunoByID(System.Int32)">
@@ -24,8 +25,10 @@
             Consulta um Aluno no banco de dados
             </summary>
             <param name="id">Id do aluno para consulta</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso consulta seja feita com sucesso</response>
+            <response code="400">Caso  Id de consulta seja inválido</response>
+            <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.AlunoController.PutAluno(System.Int32,WebApi_Biblioteca.Data.Dtos.AlunoDtos.UpdateAlunoDto)">
             <summary>
@@ -33,24 +36,28 @@
             </summary>
             <param name="id">Id do aluno para atualizar</param>
             /// <param name="dto">Objeto com os campos necessários para atualização de um Aluno</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+            <response code="404">Caso os Id não sejam encontrados na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.AlunoController.DeleteAluno(System.Int32)">
             <summary>
             Deleta um aluno do banco de dados
             </summary>
             <param name="id">Id do aluno para deletar</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja deletado com sucesso</response>
+            <response code="404">Caso o Id não seja encontrado na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EditoraController.PostEditora(WebApi_Biblioteca.Data.Dtos.EditoraDtos.CreateEditoraDto)">
             <summary>
             Adiciona uma Editora ao banco de dados
             </summary>
             <param name="dto">Objeto com os campos necessários para criação de uma Editora</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>   
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EditoraController.GetEditora">
             <summary>
@@ -64,8 +71,10 @@
             Consulta uma Editora no banco de dados
             </summary>
             <param name="id">Id da Editora para consulta</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso consulta seja feita com sucesso</response>
+            <response code="400">Caso  Id de consulta seja inválido</response>
+            <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EditoraController.PutEditora(System.Int32,WebApi_Biblioteca.Data.Dtos.EditoraDtos.UpdateEditoraDto)">
             <summary>
@@ -73,39 +82,47 @@
             </summary>
             <param name="id">Id da Editora para atualizar</param>
             <param name="dto">Objeto com os campos necessários para atualização de uma Editora</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+            <response code="404">Caso os Id não sejam encontrados na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EditoraController.DeleteEditora(System.Int32)">
             <summary>
             Deleta uma Editora do banco de dados
             </summary>
             <param name="id">Id da Editora para deletar</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja deletado com sucesso</response>
+            <response code="404">Caso os Id não seja encontrado na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EmprestimoController.PostEmprestimo(WebApi_Biblioteca.Data.Dtos.EmprestimoDtos.PostEmprestimoDto)">
             <summary>
             Adiciona um Emprestimo ao Banco de Dados
             </summary>
             <param name="emprestimoDto">Objeto com os campos necessários para criação de um Emprestimo</param>
-            <returns>IActionResult</returns>
-            <response code="200">Caso inserção seja feita com sucesso</response>
+            <returns>ActionResult</returns>
+            <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso formulário para emprestimo esteja incorreto</response>
+            <response code="404">Caso Id não seja encontrado</response>
         </member>
-        <member name="M:WebApi_Biblioteca.Controllers.EmprestimoController.PutDevolucao(System.Int32,WebApi_Biblioteca.Data.Dtos.EmprestimoDtos.DevolucaoDto)">
+        <member name="M:WebApi_Biblioteca.Controllers.EmprestimoController.PatchDevolucao(System.Int32,WebApi_Biblioteca.Data.Dtos.EmprestimoDtos.DevolucaoDto)">
             <summary>
             Atualiza o registro dos Emprestimo no banco de dados, devolvendo os items emprestados.
             </summary>
             <param name="Id">Id do Emprestimo para atualizar</param>
             <param name="dto">Objeto com os campos necessários para atualização de um Emprestimo</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso devolução já tenha sido realizada</response>
+            <response code="400">Caso formulário de devolução esteja incorreto</response>
+            <response code="404">Caso o Id do emprestimo não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.EmprestimoController.GetEmprestimos">
             <summary>
             Relatório dos Emprestimos no banco de dados
             </summary>
-            <returns>IEnumerable</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso retorno seja feita com sucesso</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.RegisterFuncionario(WebApi_Biblioteca.Data.Dtos.FuncionarioDtos.CreateFuncionarioDto)">
@@ -113,22 +130,26 @@
             Adiciona um Funcionario ao banco de dados
             </summary>
             <param name="dto">Objeto com os campos necessários para criação de um Funcionario</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>   
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.LogInFuncionario(WebApi_Biblioteca.Data.Dtos.FuncionarioDtos.LoginFuncionarioDto)">
             <summary>
             Realiza o Log In de um Funcionario atrelado ao banco de dados
             </summary>
             <param name="dto">Objeto com os campos necessários para realizar o Log In</param>
-            <returns>IActionResult</returns>
-            <response code="200">Caso Log In seja feita com sucesso</response>
+            <returns>ActionResult</returns>
+            <response code="200">Caso Login seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário para Login incorreto</response>
+            <response code="401">Caso senha esteja incorreta</response>
+            <response code="404">Caso Login não seja encontrado na base de dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.GetFuncionario">
             <summary>
             Relatório dos Funcionarios no banco de dados
             </summary>
-            <returns>IEnumerable</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso retorno seja feita com sucesso</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.GetFuncionarioByID(System.Int32)">
@@ -136,8 +157,10 @@
             Consulta um Funcionario no banco de dados
             </summary>
             <param name="id">Id do funcionario para consulta</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso consulta seja feita com sucesso</response>
+            <response code="400">Caso  Id de consulta seja inválido</response>
+            <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.PutFuncionario(System.Int32,WebApi_Biblioteca.Data.Dtos.FuncionarioDtos.UpdateFuncionarioDto)">
             <summary>
@@ -145,24 +168,29 @@
             </summary>
             <param name="id">Id do funcionario para atualizar</param>
             /// <param name="dto">Objeto com os campos necessários para atualização de um Funcionario</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso formulário para atualização esteja incorreto</response>
+            <response code="404">Caso o Id de funcionario  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.FuncionarioController.DeleteFuncionario(System.Int32)">
             <summary>
             Deleta um Funcionario do banco de dados
             </summary>
             <param name="id">Id do Funcionario para deletar</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja deletado com sucesso</response>
+            <response code="404">Caso o Id não seja encontrado na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.LivroController.PostLivro(WebApi_Biblioteca.Data.Dtos.LivrosDtos.CreateLivroDto)">
             <summary>
             Adiciona um Livro ao banco de dados
             </summary>
             <param name="livrodto">Objeto com os campos necessários para criação de um Livro</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+            <response code="404">Caso Id da Editora não seja encontrado no Banco de Dados</response>  
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.LivroController.GetLivros">
             <summary>
@@ -176,8 +204,10 @@
             Consulta um Livro no banco de dados
             </summary>
             <param name="id">Id do Livro para consulta</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso consulta seja feita com sucesso</response>
+            <response code="400">Caso  Id de consulta seja inválido</response>
+            <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.LivroController.PutLivro(System.Int32,WebApi_Biblioteca.Data.Dtos.LivrosDtos.UpdateLivroDto)">
             <summary>
@@ -185,16 +215,19 @@
             </summary>
             <param name="id">Id do Livro para atualizar</param>
             <param name="dto">Objeto com os campos necessários para atualização de um Livro</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+            <response code="404">Caso os Ids não sejam encontrados na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.LivroController.DeleteLivro(System.Int32)">
             <summary>
             Deleta um Livro do banco de dados
             </summary>
             <param name="id">Id do Livro para deletar</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja deletado com sucesso</response>
+            <response code="404">Caso Id de livro não encontrado no Base de dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.MultasController.GerarMulta(System.Int32,System.Int32)">
             <summary>
@@ -202,8 +235,9 @@
             </summary>
             <param name="AlunoId">Id do Aluno para Gerar a Multa</param>
             <param name="multa">Valor da Multa</param>
-            <returns>IActionResult</returns>
-            <response code="201">Caso Multa seja gerada com sucesso</response>
+            <returns>ActionResult</returns>
+            <response code="200">Caso Multa seja gerada com sucesso</response>
+            <response code="404">Caso Id não seja encontrado</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.MultasController.PagarMulta(System.Int32,System.Int32)">
             <summary>
@@ -211,22 +245,24 @@
             </summary>
             <param name="AlunoId">Id do Aluno para Pagar a Multa</param>
             <param name="valor">Valor para ser debitado da Multa</param>
-            <returns>IActionResult</returns>
-            <response code="201">Caso o pagamento seja gerado com sucesso</response>
+            <returns>ActionResult</returns>
+            <response code="200">Caso Multa seja paga com sucesso</response>
+            <response code="404">Caso Id não seja encontrado</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.PeriodicoController.PostPeriodico(WebApi_Biblioteca.Data.Dtos.PeriodicoDtos.CreatePeriodicoDto)">
             <summary>
             Adiciona um Periodico ao banco de dados
             </summary>
             <param name="periodicodto">Objeto com os campos necessários para criação de um Periodico</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.PeriodicoController.GetPeriodicos">
             <summary>
             Relatório dos Periodicoss no banco de dados
             </summary>
-            <returns>IEnumerable</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso retorno seja feita com sucesso</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.PeriodicoController.GetPeriodicosByID(System.Int32)">
@@ -234,8 +270,10 @@
             Consulta um Periodico no banco de dados
             </summary>
             <param name="id">Id do Periodico para consulta</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso consulta seja feita com sucesso</response>
+            <response code="400">Caso  Id de consulta seja inválido</response>
+            <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.PeriodicoController.PutPeriodico(System.Int32,WebApi_Biblioteca.Data.Dtos.PeriodicoDtos.UpdatePeriodicoDto)">
             <summary>
@@ -243,16 +281,19 @@
             </summary>
             <param name="id">Id do Periodico para atualizar</param>
             <param name="dto">Objeto com os campos necessários para atualização de um Periodico</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja atualizado com sucesso</response>
+            <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+            <response code="404">Caso o Id não seja encontrado na Base de Dados</response>
         </member>
         <member name="M:WebApi_Biblioteca.Controllers.PeriodicoController.DeletePeriodico(System.Int32)">
             <summary>
             Deleta um Periodico do banco de dados
             </summary>
             <param name="id">Id do Periodico para deletar</param>
-            <returns>IActionResult</returns>
+            <returns>ActionResult</returns>
             <response code="200">Caso registro seja deletado com sucesso</response>
+            <response code="404">Caso Id do periodico não encontrado no Base de dados</response>
         </member>
         <member name="T:WebApi_Biblioteca.Migrations.LivroEEditora">
             <inheritdoc />
@@ -336,6 +377,78 @@
             <inheritdoc />
         </member>
         <member name="M:WebApi_Biblioteca.Migrations.CorrecaoLivroPeriodico.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.delete">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.delete.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.delete.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.delete.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.deleteLivro">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteLivro.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteLivro.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteLivro.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.deletePeriodico">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deletePeriodico.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deletePeriodico.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deletePeriodico.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.deleteEditora">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditora.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditora.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditora.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.deleteEditor">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditor.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditor.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.deleteEditor.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:WebApi_Biblioteca.Migrations.loginUnique">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.loginUnique.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.loginUnique.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApi_Biblioteca.Migrations.loginUnique.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

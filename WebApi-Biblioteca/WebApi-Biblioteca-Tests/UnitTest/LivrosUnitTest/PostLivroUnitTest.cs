@@ -15,11 +15,11 @@ public class PostLivroUnitTest : IClassFixture<LivrosUnitTestController>
     }
 
     [Fact]
-    public void PostLivro_Ok_Result()
+    public void PostLivro_CreatedAtAction_Result()
     {
         var livrodto = new CreateLivroDto
         {
-            EditoraId = 1,
+            EditoraId = 2,
             Nome = "Livro",
             Assunto = "Programação",
             Tombo = 10239123,
@@ -40,7 +40,7 @@ public class PostLivroUnitTest : IClassFixture<LivrosUnitTestController>
 
         var data = _controller.PostLivro(livrodto);
 
-        var result = data.Result.Should().BeOfType<BadRequestResult>();
+        var result = data.Result.Should().BeOfType<BadRequestObjectResult>();
         result.Subject.StatusCode.Should().Be(400);
     }
 
@@ -59,7 +59,7 @@ public class PostLivroUnitTest : IClassFixture<LivrosUnitTestController>
 
         var data = _controller.PostLivro(livrodto);
 
-        var result = data.Result.Should().BeOfType<NotFoundResult>();
+        var result = data.Result.Should().BeOfType<NotFoundObjectResult>();
         result.Subject.StatusCode.Should().Be(404);
     }
 }

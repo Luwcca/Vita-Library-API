@@ -153,7 +153,7 @@ namespace WebApi_Biblioteca.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -176,6 +176,9 @@ namespace WebApi_Biblioteca.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FuncionarioId");
+
+                    b.HasIndex("Login")
+                        .IsUnique();
 
                     b.ToTable("Funcionarios");
                 });
@@ -310,11 +313,13 @@ namespace WebApi_Biblioteca.Migrations
 
                     b.HasOne("WebApi_Biblioteca.Models.Livro", "Livro")
                         .WithMany("ItemEmprestimo")
-                        .HasForeignKey("LivroId");
+                        .HasForeignKey("LivroId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApi_Biblioteca.Models.Periodico", "Periodico")
                         .WithMany("ItemEmprestimo")
-                        .HasForeignKey("PeriodicoId");
+                        .HasForeignKey("PeriodicoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Emprestimo");
 

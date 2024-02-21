@@ -7,6 +7,10 @@ public class EmprestimoService
 {
     public bool ValidarEntrada(Emprestimo emprestimo)
     {
+        if(emprestimo.ItemEmprestimo == null)
+        {
+            return false;
+        }
 
         if (emprestimo.ItemEmprestimo.LivroId == 0)
         {

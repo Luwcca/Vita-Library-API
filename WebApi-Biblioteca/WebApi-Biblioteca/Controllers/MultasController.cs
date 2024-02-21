@@ -20,10 +20,13 @@ public class MultasController : ControllerBase
     /// </summary>
     /// <param name="AlunoId">Id do Aluno para Gerar a Multa</param>
     /// <param name="multa">Valor da Multa</param>
-    /// <returns>IActionResult</returns>
-    /// <response code="201">Caso Multa seja gerada com sucesso</response>
+    /// <returns>ActionResult</returns>
+    /// <response code="200">Caso Multa seja gerada com sucesso</response>
+    /// <response code="404">Caso Id não seja encontrado</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPatch("Gerar Multa{AlunoId}")]
-    public IActionResult GerarMulta(int AlunoId, [FromBody] int multa)
+    public ActionResult GerarMulta(int AlunoId, [FromBody] int multa)
     {
         var aluno = _context.Alunos.FirstOrDefault(a => a.AlunoId == AlunoId);
         if (aluno == null)
@@ -44,10 +47,13 @@ public class MultasController : ControllerBase
     /// </summary>
     /// <param name="AlunoId">Id do Aluno para Pagar a Multa</param>
     /// <param name="valor">Valor para ser debitado da Multa</param>
-    /// <returns>IActionResult</returns>
-    /// <response code="201">Caso o pagamento seja gerado com sucesso</response>
+    /// <returns>ActionResult</returns>
+    /// <response code="200">Caso Multa seja paga com sucesso</response>
+    /// <response code="404">Caso Id não seja encontrado</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPatch("Pagar Multa{AlunoId}")]
-    public IActionResult PagarMulta(int AlunoId, [FromBody] int valor)
+    public ActionResult PagarMulta(int AlunoId, [FromBody] int valor)
     {
         var aluno = _context.Alunos.FirstOrDefault(a => a.AlunoId == AlunoId);
         if (aluno == null)

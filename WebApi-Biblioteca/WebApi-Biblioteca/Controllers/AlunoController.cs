@@ -25,15 +25,24 @@ public class AlunoController : ControllerBase
     /// Adiciona um Aluno ao banco de dados
     /// </summary>
     /// <param name="dto">Objeto com os campos necessários para criação de um Aluno</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="201">Caso inserção seja feita com sucesso</response>
-    [HttpPost]
+    /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>   
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public IActionResult PostAluno([FromBody] CreateAlunoDto dto)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPost]
+    public ActionResult<CreateAlunoDto> PostAluno([FromBody] CreateAlunoDto dto)
     {
         Aluno aluno = _mapper.Map<Aluno>(dto);
-        _context.Alunos.Add(aluno);
-        _context.SaveChanges();
+        try
+        {
+            _context.Alunos.Add(aluno);
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
         return CreatedAtAction(nameof(GetAluno), new { id = aluno.AlunoId }, aluno);
 
     }
@@ -41,23 +50,35 @@ public class AlunoController : ControllerBase
     /// <summary>
     /// Relatório dos Alunos no banco de dados
     /// </summary>
-    /// <returns>IEnumerable</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso retorno seja feita com sucesso</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet]
-    public IEnumerable<ReadAlunoDto> GetAluno()
+    public ActionResult<IEnumerable<ReadAlunoDto>> GetAluno()
     {
-        return _mapper.Map<List<ReadAlunoDto>>(_context.Alunos);
+        var alunos = _mapper.Map<List<ReadAlunoDto>>(_context.Alunos);
+        return Ok(alunos);
     }
 
     /// <summary>
     /// Consulta um Aluno no banco de dados
     /// </summary>
     /// <param name="id">Id do aluno para consulta</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso consulta seja feita com sucesso</response>
+    /// <response code="400">Caso  Id de consulta seja inválido</response>
+    /// <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("{id}")]
-    public IActionResult GetAlunoByID(int id)
+    public ActionResult<ReadAlunoDto> GetAlunoByID(int id)
     {
+        if (id <= 0 || id == null)
+        {
+            return BadRequest("Id de Aluno inválido");
+        }
+
         var aluno = _context.Alunos.Find(id);
         if (aluno == null)
         {
@@ -74,20 +95,32 @@ public class AlunoController : ControllerBase
     /// </summary>
     /// <param name="id">Id do aluno para atualizar</param>
     /// /// <param name="dto">Objeto com os campos necessários para atualização de um Aluno</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja atualizado com sucesso</response>
+    /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>
+    /// <response code="404">Caso os Id não sejam encontrados na Base de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpPut("{id}")]
-    public IActionResult PutAluno(int id, [FromBody] UpdateAlunoDto dto)
+    public ActionResult<UpdateAlunoDto> PutAluno(int id, [FromBody] UpdateAlunoDto dto)
     {
         var aluno = _context.Alunos.Find(id);
         if (aluno == null)
         {
             return NotFound("Aluno não encontrado");
         }
+        try
+        {
+            _mapper.Map(dto, aluno);
 
-        _mapper.Map(dto, aluno);
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
 
-        _context.SaveChanges();
         return Ok("Informações do Aluno alterada");
     }
 
@@ -95,19 +128,22 @@ public class AlunoController : ControllerBase
     /// Deleta um aluno do banco de dados
     /// </summary>
     /// <param name="id">Id do aluno para deletar</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja deletado com sucesso</response>
+    /// <response code="404">Caso o Id não seja encontrado na Base de Dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpDelete("{id}")]
-    public IActionResult DeleteAluno(int id)
+    public ActionResult DeleteAluno(int id)
     {
         var aluno = _context.Alunos.Find(id);
         if (aluno == null)
         {
-            return NotFound("Aluno não encontrado");
+            return NotFound("Id de Aluno não encontrado");
         }
         _context.Alunos.Remove(aluno);
         _context.SaveChanges();
-        
+
         return Ok("Aluno deletado");
     }
 }

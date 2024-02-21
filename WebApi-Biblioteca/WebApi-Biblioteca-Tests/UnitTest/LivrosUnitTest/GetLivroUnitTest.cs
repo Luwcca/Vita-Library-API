@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi_Biblioteca.Controllers;
 using WebApi_Biblioteca.Data.Dtos.LivrosDtos;
 
-namespace WebApi_Biblioteca_Tests.UnitTest;
+namespace WebApi_Biblioteca_Tests.UnitTest.LivrosUnitTest;
 
 public class GetLivroUnitTest : IClassFixture<LivrosUnitTestController>
 {
@@ -17,7 +17,7 @@ public class GetLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void GetLivrosById_OKResult()
     {
-        var livroId = 2;
+        var livroId = 44;
         var data = _controller.GetLivrosByID(livroId);
 
         data.Result.Should().BeOfType<OkObjectResult>()

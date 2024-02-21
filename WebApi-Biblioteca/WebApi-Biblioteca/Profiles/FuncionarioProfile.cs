@@ -9,6 +9,7 @@ namespace WebApi_Biblioteca.Profiles
         public FuncionarioProfile() {
             CreateMap<CreateFuncionarioDto, Funcionario>();
             CreateMap<ReadFuncionarioDto,Funcionario>().ReverseMap();
+            CreateMap<UpdateFuncionarioDto, Funcionario>();
         }
     }
 }

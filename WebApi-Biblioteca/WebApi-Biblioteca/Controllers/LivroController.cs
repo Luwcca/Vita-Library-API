@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using WebApi_Biblioteca.Data;
 using WebApi_Biblioteca.Data.Dtos.LivrosDtos;
 using WebApi_Biblioteca.Models;
+
 
 namespace WebApi_Biblioteca.Controllers;
 
@@ -27,30 +27,36 @@ public class LivroController : ControllerBase
     /// Adiciona um Livro ao banco de dados
     /// </summary>
     /// <param name="livrodto">Objeto com os campos necessários para criação de um Livro</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="201">Caso inserção seja feita com sucesso</response>
     /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>
-    /// <response code="404">Caso Id da Editora não seja encontrado no Banco de Dados</response>
-    [HttpPost]
+    /// <response code="404">Caso Id da Editora não seja encontrado no Banco de Dados</response>  
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPost]
     public ActionResult<CreateLivroDto> PostLivro([FromBody] CreateLivroDto livrodto)
     {
-        if (livrodto.Assunto.IsNullOrEmpty() || livrodto.Autor.IsNullOrEmpty() || livrodto.Status == null
-            || livrodto.Nome.IsNullOrEmpty() || livrodto.Tombo == null || livrodto.EditoraId == null)
-        {
-            return BadRequest("Todos os campos do formulário precisam ser preenchidos");
-        }
-
-        if(_context.Editoras.Find(livrodto.EditoraId) == null)
-        {
-            return NotFound("Id de Editora não encontrado na Base de Dados");
-        }
 
         var livro = _mapper.Map<Livro>(livrodto);
-        _context.Livros.Add(livro);
-        _context.SaveChanges();
+
+        try
+        {
+            if (_context.Editoras.Find(livro.EditoraId) == null)
+            {
+                return NotFound("Id de Editora não encontrado na Base de Dados");
+            }
+
+            _context.Livros.Add(livro);
+            _context.SaveChanges();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.InnerException.Message);
+        }
+
+
         return CreatedAtAction(nameof(GetLivros), new { id = livro.LivroId }, livro);
 
     }
@@ -72,7 +78,7 @@ public class LivroController : ControllerBase
     /// Consulta um Livro no banco de dados
     /// </summary>
     /// <param name="id">Id do Livro para consulta</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso consulta seja feita com sucesso</response>
     /// <response code="400">Caso  Id de consulta seja inválido</response>
     /// <response code="404">Caso o Id de consulta  não seja encontrado na Banco de Dados</response>
@@ -103,7 +109,7 @@ public class LivroController : ControllerBase
     /// </summary>
     /// <param name="id">Id do Livro para atualizar</param>
     /// <param name="dto">Objeto com os campos necessários para atualização de um Livro</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja atualizado com sucesso</response>
     /// <response code="400">Caso preenchimento do formulário esteja incorreto</response>
     /// <response code="404">Caso os Ids não sejam encontrados na Base de Dados</response>
@@ -116,23 +122,29 @@ public class LivroController : ControllerBase
         var livro = _context.Livros.Find(id);
         if (livro == null)
         {
-            return NotFound("Id de livro não encontrado no Base de dados");
+            return NotFound("Id do livro não encontrado na Base de Dados");
         }
 
-        if (livrodto.Assunto.IsNullOrEmpty() || livrodto.Autor.IsNullOrEmpty() || livrodto.Status == null
-            || livrodto.Nome.IsNullOrEmpty() || livrodto.Tombo == null || livrodto.EditoraId == null)
+        try
         {
-            return BadRequest("Todos os campos do formulário precisam ser preenchidos");
-        }
 
-        if (_context.Editoras.Find(livrodto.EditoraId) == null)
+            if (_context.Editoras.Find(livro.EditoraId) == null)
+            {
+                return NotFound("Id de Editora não encontrado na Base de Dados");
+            }
+
+            _mapper.Map(livrodto, livro);
+
+            _context.SaveChanges();
+
+        }
+        catch (Exception ex)
         {
-            return NotFound("Id de Editora não encontrado na Base de Dados");
+            return BadRequest(ex.InnerException.Message);
         }
 
-        _mapper.Map(livrodto, livro);
 
-        _context.SaveChanges();
+
         return Ok("Livro atualizado");
     }
 
@@ -140,9 +152,11 @@ public class LivroController : ControllerBase
     /// Deleta um Livro do banco de dados
     /// </summary>
     /// <param name="id">Id do Livro para deletar</param>
-    /// <returns>IActionResult</returns>
+    /// <returns>ActionResult</returns>
     /// <response code="200">Caso registro seja deletado com sucesso</response>
     /// <response code="404">Caso Id de livro não encontrado no Base de dados</response>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{id}")]
     public ActionResult DeleteLivro(int id)
     {

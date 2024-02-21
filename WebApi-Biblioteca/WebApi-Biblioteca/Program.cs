@@ -23,11 +23,13 @@ public class Program
         //add Automapper em todo App domain
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
+        //add autenticação jwt bearer
         builder.Services.AddAuthentication(opt =>
         {
+            //especifica o esquema de autenticação e o desafio como jwt por padrão
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //especifica as configurações de validação do token
         }).AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
@@ -47,18 +49,20 @@ public class Program
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddSwaggerGen(c =>
         {
+            //adição de definição Bearer de segurança
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer",
-                BearerFormat = "JWT",
-                In = ParameterLocation.Header,
+                Name = "Authorization", //cabeçalho do token
+                Type = SecuritySchemeType.ApiKey, //tipo de autorização realizada por chave de api
+                Scheme = "Bearer", //esquema bearer
+                BearerFormat = "JWT",//formato jwt
+                In = ParameterLocation.Header,//Indica que o token deve ser atrelado ao header request
                 Description = "Autorização utilizando Bearer Jwt. \r\n Escreva Bearer + o token gerado no LogIn"
             });
-
+            //Requisita que as operações da API necessitem do Bearer
             c.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
                 {
@@ -74,6 +78,7 @@ public class Program
                 }
             });
 
+            //documentação
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi-Biblioteca", Version = "v1" });
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
