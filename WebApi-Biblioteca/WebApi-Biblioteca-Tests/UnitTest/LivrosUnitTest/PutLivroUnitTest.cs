@@ -22,7 +22,7 @@ public class PutLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void PutLivro_Ok_Result()
     {
-        var livroId = 44;
+        var livroId = 45;
 
         var livrodto = new UpdateLivroDto
         {
@@ -64,7 +64,7 @@ public class PutLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void PutLivro_BadRequest_Result()
     {
-        var livroId = 44;
+        var livroId = 45;
 
         var livrodto = new UpdateLivroDto
         {

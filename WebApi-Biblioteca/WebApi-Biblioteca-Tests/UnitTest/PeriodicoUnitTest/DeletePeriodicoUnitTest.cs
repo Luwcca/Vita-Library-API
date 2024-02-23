@@ -13,9 +13,10 @@ public class DeletePeriodicoUnitTest : IClassFixture<PeriodicoUnitTestController
         _controller = new PeriodicoController(controller.context, controller.mapper);
     }
 
+    [Fact]
     public void DeletePeriodico_Ok_Result()
     {
-        var id = 4;
+        var id = 7;
 
         var data = _controller.DeletePeriodico(id);
 

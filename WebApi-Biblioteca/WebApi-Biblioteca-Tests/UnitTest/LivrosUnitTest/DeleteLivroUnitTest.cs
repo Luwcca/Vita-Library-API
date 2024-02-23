@@ -21,7 +21,7 @@ public class DeleteLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void DeleteLivro_Ok_Result()
     {
-        var id = 44;
+        var id = 48;
 
         var data = _controller.DeleteLivro(id);
 

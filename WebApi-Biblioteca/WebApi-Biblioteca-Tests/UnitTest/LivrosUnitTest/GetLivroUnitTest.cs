@@ -17,7 +17,7 @@ public class GetLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void GetLivrosById_OKResult()
     {
-        var livroId = 44;
+        var livroId = 45;
         var data = _controller.GetLivrosByID(livroId);
 
         data.Result.Should().BeOfType<OkObjectResult>()

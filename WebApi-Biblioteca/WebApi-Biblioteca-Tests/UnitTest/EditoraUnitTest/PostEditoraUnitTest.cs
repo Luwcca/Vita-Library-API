@@ -38,7 +38,11 @@ public class PostEditoraUnitTest : IClassFixture<EditoraUnitTestController>
     [Fact]
     public void PostEditora_BadRequest_Result()
     {
-        CreateEditoraDto editoradto = null;
+        var editoradto = new CreateEditoraDto
+        {
+            Nome = "Editora S.A",
+         
+        };
 
         var data = _controller.PostEditora(editoradto);
 

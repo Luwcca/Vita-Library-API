@@ -21,7 +21,7 @@ public class DeleteEditoraUnitTest : IClassFixture<EditoraUnitTestController>
     [Fact]
     public void DeleteEditora_Ok_Result()
     {
-        var id = 4;
+        var id = 7;
 
         var data = _controller.DeleteEditora(id);
 

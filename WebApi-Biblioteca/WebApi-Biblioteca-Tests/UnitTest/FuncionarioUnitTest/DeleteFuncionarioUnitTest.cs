@@ -22,7 +22,7 @@ public class DeleteFuncionarioUnitTest : IClassFixture<FuncionarioUnitTestContro
     [Fact]
     public void DeleteFuncionario_Ok_Result()
     {
-        var id = 3;
+        var id = 31;
 
         var data = _controller.DeleteFuncionario(id);
 

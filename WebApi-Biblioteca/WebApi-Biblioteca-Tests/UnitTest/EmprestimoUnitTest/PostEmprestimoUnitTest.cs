@@ -19,8 +19,8 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
-            FuncionarioId = 1,
+            AlunoId = 15,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
                 LivroId = 45
@@ -40,7 +40,7 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
+            AlunoId = 8,
             FuncionarioId = 999,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
@@ -63,7 +63,7 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
         var dto = new PostEmprestimoDto
         {
             AlunoId = 999,
-            FuncionarioId = 1,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
                 LivroId = 45
@@ -83,8 +83,8 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
-            FuncionarioId = 1,
+            AlunoId = 8,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
                 LivroId = 999
@@ -104,8 +104,8 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
-            FuncionarioId = 1,
+            AlunoId = 8,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             { 
                 PeriodicoId = 999
@@ -126,8 +126,8 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
-            FuncionarioId = 1,
+            AlunoId = 8,
+            FuncionarioId = 2,
             ItemEmprestimo =
             {
         
@@ -149,8 +149,8 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
     {
         var dto = new PostEmprestimoDto
         {
-            AlunoId = 6,
-            FuncionarioId = 1,
+            AlunoId = 8,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
                 LivroId = 45
@@ -173,7 +173,7 @@ public class PostEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestController
         var dto = new PostEmprestimoDto
         {
             AlunoId = 8,
-            FuncionarioId = 1,
+            FuncionarioId = 2,
             ItemEmprestimo = new PostItemEmprestimoDto
             {
                 LivroId = 45

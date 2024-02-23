@@ -37,7 +37,11 @@ public class PostPeriodicoUnitTest : IClassFixture<PeriodicoUnitTestController>
     [Fact]
     public void PostPeriodico_BadRequest_Result()
     {
-        CreatePeriodicoDto periodicodto = null;
+        var periodicodto = new CreatePeriodicoDto
+        {
+            Nome = "Periodico",
+          
+        };
 
         var data = _controller.PostPeriodico(periodicodto);
 

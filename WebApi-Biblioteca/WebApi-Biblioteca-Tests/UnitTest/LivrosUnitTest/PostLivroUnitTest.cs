@@ -36,7 +36,11 @@ public class PostLivroUnitTest : IClassFixture<LivrosUnitTestController>
     [Fact]
     public void PostLivro_BadRequest_Result()
     {
-        CreateLivroDto livrodto = null;
+        var livrodto = new CreateLivroDto
+        {
+            EditoraId = 2,
+            Nome = "Livro",
+        };
 
         var data = _controller.PostLivro(livrodto);
 

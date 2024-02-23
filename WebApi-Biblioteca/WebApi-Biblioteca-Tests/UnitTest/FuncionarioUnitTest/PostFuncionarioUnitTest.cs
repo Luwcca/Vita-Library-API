@@ -1,10 +1,5 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi_Biblioteca.Controllers;
 using WebApi_Biblioteca.Data.Dtos.FuncionarioDtos;
 
@@ -32,7 +27,7 @@ public class PostFuncionarioUnitTest : IClassFixture<FuncionarioUnitTestControll
             UF = "SP",
             Telefone = 1234151234,
             Login = "login2",
-            Senha = "senha" 
+            Senha = "senha"
         };
 
         var data = _controller.RegisterFuncionario(funcionariodto);
@@ -46,7 +41,11 @@ public class PostFuncionarioUnitTest : IClassFixture<FuncionarioUnitTestControll
     [Fact]
     public void Post_ResgisterFuncionario_BadRequest_Result()
     {
-        CreateFuncionarioDto funcionariodto = null;
+        var funcionariodto = new CreateFuncionarioDto
+        {
+            Nome = "Funcionario",
+
+        };
 
         var data = _controller.RegisterFuncionario(funcionariodto);
 

@@ -17,7 +17,7 @@ public class PutAlunoUnitTest : IClassFixture<AlunoUnitTestController>
     [Fact]
     public void PutAluno_Ok_Result()
     {
-        var alunoid = 6;
+        var alunoid = 8;
 
         var alunodto = new UpdateAlunoDto
         {
@@ -28,8 +28,7 @@ public class PutAlunoUnitTest : IClassFixture<AlunoUnitTestController>
             Bairro = "Bairro",
             Cidade = "Cidade",
             UF = "SP",
-            Multas = 0,
-            Checkbox = true 
+         
         };
 
         var data = _controller.PutAluno(alunoid, alunodto);
@@ -52,8 +51,7 @@ public class PutAlunoUnitTest : IClassFixture<AlunoUnitTestController>
             Bairro = "Bairro",
             Cidade = "Cidade",
             UF = "SP",
-            Multas = 0,
-            Checkbox = true
+         
         };
 
         var data = _controller.PutAluno(alunoid, alunodto);
@@ -65,7 +63,7 @@ public class PutAlunoUnitTest : IClassFixture<AlunoUnitTestController>
     [Fact]
     public void PutLivro_BadRequest_Result()
     {
-        var alunoid = 6;
+        var alunoid = 8;
 
         var alunodto = new UpdateAlunoDto
         {
@@ -75,8 +73,7 @@ public class PutAlunoUnitTest : IClassFixture<AlunoUnitTestController>
             Bairro = "Bairro",
             Cidade = "Cidade",
             UF = "SP",
-            Multas = 0,
-            Checkbox = true
+
         };
 
         var data = _controller.PutAluno(alunoid, alunodto);

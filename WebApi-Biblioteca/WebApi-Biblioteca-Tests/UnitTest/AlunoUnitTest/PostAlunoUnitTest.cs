@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Microsoft.AspNetCore.Mvc;
 using WebApi_Biblioteca.Controllers;
 using WebApi_Biblioteca.Data.Dtos.AlunoDtos;
@@ -41,7 +42,11 @@ public class PostAlunoUnitTest : IClassFixture<AlunoUnitTestController>
     [Fact]
     public void PostAluno_BadRequest_Result()
     {
-        CreateAlunoDto alunodto = null;
+        var alunodto = new CreateAlunoDto
+        {
+            Nome = "Aluno"
+        };
+
 
         var data = _controller.PostAluno(alunodto);
 

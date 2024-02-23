@@ -21,7 +21,7 @@ public class DeleteAlunoUnitTest : IClassFixture<AlunoUnitTestController>
     [Fact]
     public void DeleteAluno_Ok_Result()
     {
-        var id = 7;
+        var id = 19;
 
         var data = _controller.DeleteAluno(id);
 

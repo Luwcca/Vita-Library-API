@@ -17,7 +17,7 @@ public class PatchEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestControlle
     [Fact]
     public void PatchDevolucao_Ok_Result()
     {
-        var emprestimoId = 51;
+        var emprestimoId = 53;
 
         var dto = new DevolucaoDto
         {
@@ -49,7 +49,7 @@ public class PatchEmprestimoUnitTest : IClassFixture<EmprestimoUnitTestControlle
     [Fact]
     public void PatchDevolucao_JaRealizada_BadRequest_Result()
     {
-        var emprestimoId = 41;
+        var emprestimoId = 52;
 
         var dto = new DevolucaoDto
         {

@@ -17,7 +17,7 @@ public class GetAlunoUnitTest : IClassFixture<AlunoUnitTestController>
     [Fact]
     public void GetAlunoById_OKResult()
     {
-        var alunoId = 6;
+        var alunoId = 8;
         var data = _controller.GetAlunoByID(alunoId);
 
         data.Result.Should().BeOfType<OkObjectResult>()
